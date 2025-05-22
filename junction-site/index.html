@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Junction MC</title>
+   <link rel="icon" type="image/png" href="favicon.png" />
+   <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat ExtraBold', sans-serif;
+      background-color: #F5F5F0;
+      color: #202124;
+      text-align: center;
+      padding-top: 40px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Diagonal stripes */
+    .stripe.red {
+      position: absolute;
+      top: 100px;
+      left: -200px;
+      width: 1100px;
+      height: 100px;
+      background-color: #c62828;
+      transform: rotate(-45deg);
+      z-index: -1;
+    }
+    .stripe.blue {
+      position: absolute;
+      top: 250px;
+      left: -250px;
+      width: 1200px;
+      height: 100px;
+      background-color: #1565c0;
+      transform: rotate(-45deg);
+      z-index: -2;
+    }
+    .stripe.green {
+      position: absolute;
+      top: 360px;
+      left: -310px;
+      width: 1400px;
+      height: 100px;
+      background-color: #2e7d32;
+      transform: rotate(-45deg);
+      z-index: -3;
+    }
+    .stripe.yellow {
+      position: absolute;
+      top: 470px;
+      left: -420px;
+      width: 1700px;
+      height: 100px;
+      background-color: #f9a825;
+      transform: rotate(-45deg);
+      z-index: -4;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background-color: #e0e0dc;
+      color: #202124;
+      padding: 30px 0 40px;
+      width: 100%;
+      border-bottom: 2px solid #ccc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      position: absolute;
+      left: 30px;
+      height: 180px;
+      width: auto;
+      border-radius: 12px;
+    }
+
+    .site-title {
+      font-size: 7.5em;
+      font-family: 'Montserrat ExtraBold', sans-serif;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-size: 2.2em;
+      font-family: 'Montserrat ExtraBold', sans-serif;
+      font-weight: 700;
+      color: #3a3a3a;
+      margin-top: 0.3em;
+    }
+
+ .countdown {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #e0e0dc;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+    img.screenshot {
+      max-width: 80%;
+      height: auto;
+      display: block;
+      margin: 0.2em auto 2em;
+      padding: 15px;
+      background-color: #e0e0dc;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Color stripes -->
+  <div class="stripe red"></div>
+  <div class="stripe blue"></div>
+  <div class="stripe green"></div>
+  <div class="stripe yellow"></div>
+
+  <header>
+    <img src="logo.png" alt="The Junction Logo" class="logo" />
+    <div class="site-title">THE JUNCTION</div>
+    <div class="subtitle">Established 2017</div>
+  </header>
+
+  <div class="countdown" id="countdown">Loading countdown...</div>
+
+  <img class="screenshot" src="screenshot.jpg" alt="Server screenshot" />
+
+  <p>Minecraft Version: <strong>1.21.5, Fabric</strong></p>
+  <p>Invite & Whitelist-only. Contact an appropriate member to request access.</p>
+
+  <script>
+    const launchDate = new Date("May 24, 2025 10:00:00 EST").getTime();
+
+    const countdownEl = document.getElementById("countdown");
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+
+     if (distance <= 0) {
+  clearInterval(timer);
+  countdownEl.innerText = "Server is Online!";
+  countdownEl.style.backgroundColor = "#c8e6c9"; // light green background
+  countdownEl.style.color = "#2e7d32"; // darker green text
+  return;
+}
+
+        
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.innerText = `Server launches in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+  </script>
+
+</body>
+</html>
