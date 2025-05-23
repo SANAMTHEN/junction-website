@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Junction MC</title>
-   <link rel="icon" type="image/png" href="favicon.png" />
-   <style>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
     body {
       margin: 0;
       font-family: 'Montserrat ExtraBold', sans-serif;
@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* Diagonal stripes */
     .stripe.red {
       position: absolute;
       top: 100px;
@@ -28,6 +27,7 @@
       transform: rotate(-45deg);
       z-index: -1;
     }
+
     .stripe.blue {
       position: absolute;
       top: 250px;
@@ -38,6 +38,7 @@
       transform: rotate(-45deg);
       z-index: -2;
     }
+
     .stripe.green {
       position: absolute;
       top: 360px;
@@ -48,6 +49,7 @@
       transform: rotate(-45deg);
       z-index: -3;
     }
+
     .stripe.yellow {
       position: absolute;
       top: 470px;
@@ -96,18 +98,17 @@
       margin-top: 0.3em;
     }
 
- .countdown {
-  font-size: 2em;
-  font-weight: bold;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  display: inline-block;
-  padding: 15px 40px;
-  background-color: #e0e0dc;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
+    .countdown {
+      font-size: 2em;
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      display: inline-block;
+      padding: 15px 40px;
+      background-color: #e0e0dc;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
 
     img.screenshot {
       max-width: 80%;
@@ -119,11 +120,47 @@
       border-radius: 12px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
+    .menu-container {
+      position: absolute;
+      right: 30px;
+      top: 40px;
+      text-align: right;
+    }
+
+    .menu-icon {
+      font-size: 2em;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #e0e0dc;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 8px;
+      z-index: 10;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: #202124;
+      font-weight: bold;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #d6d6d2;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Color stripes -->
   <div class="stripe red"></div>
   <div class="stripe blue"></div>
   <div class="stripe green"></div>
@@ -131,6 +168,12 @@
 
   <header>
     <img src="logo.png" alt="The Junction Logo" class="logo" />
+    <div class="menu-container">
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="http://map.thejunctionmc.com:8080" target="_blank">View Map</a>
+      </div>
+    </div>
     <div class="site-title">THE JUNCTION</div>
     <div class="subtitle">Established 2017</div>
   </header>
@@ -144,21 +187,19 @@
 
   <script>
     const launchDate = new Date("May 24, 2025 10:00:00 EST").getTime();
-
     const countdownEl = document.getElementById("countdown");
+
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = launchDate - now;
 
-     if (distance <= 0) {
-  clearInterval(timer);
-  countdownEl.innerText = "Server is Online!";
-  countdownEl.style.backgroundColor = "#c8e6c9"; // light green background
-  countdownEl.style.color = "#2e7d32"; // darker green text
-  return;
-}
-
-        
+      if (distance <= 0) {
+        clearInterval(timer);
+        countdownEl.innerText = "Server is Online!";
+        countdownEl.style.backgroundColor = "#c8e6c9";
+        countdownEl.style.color = "#2e7d32";
+        return;
+      }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -167,6 +208,20 @@
 
       countdownEl.innerText = `Server launches in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
+
+    function toggleMenu() {
+      const menu = document.getElementById("dropdownMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    window.onclick = function(e) {
+      if (!e.target.matches('.menu-icon')) {
+        const menu = document.getElementById("dropdownMenu");
+        if (menu && menu.style.display === "block") {
+          menu.style.display = "none";
+        }
+      }
+    };
   </script>
 
 </body>
