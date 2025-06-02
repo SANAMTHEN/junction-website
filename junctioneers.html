@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Junctioneers</title>
+<link rel="icon" type="image/png" href="favicon.png" />
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    background-color: #F5F5F0;
+    color: #202124;
+    margin: 0;
+    text-align: center;
+    padding: 40px;
+  }
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 3em;
+    margin: 20px 0;
+  }
+
+  /* Colored lines */
+  .line {
+    height: 6px;
+    width: 100%;
+  }
+
+  .line.red { background-color: #c62828; margin-bottom: 5px; }
+  .line.blue { background-color: #1565c0; margin-bottom: 20px; }
+  .line.green { background-color: #2e7d32; margin-top: 20px; margin-bottom: 5px; }
+  .line.yellow { background-color: #f9a825; margin-bottom: 30px; }
+
+  header {
+    position: relative;
+  }
+
+  .logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  .player-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  .player-card {
+    position: relative;
+    background-color: #e0e0dc;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 200px;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+
+  .player-card:hover {
+    transform: scale(1.05);
+  }
+
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .player-card img.skin-image {
+    width: 100%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .player-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .base-container {
+    overflow: hidden;
+    border-radius: 12px;
+    max-width: 0;
+    max-height: 0;
+    transition: max-width 0.5s ease, max-height 0.5s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .player-card.expanded .base-container {
+    max-width: 1200px;
+    max-height: 1000px;
+  }
+
+  .base-container img.base-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 20px;
+    display: block;
+  }
+
+  .coords {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 10px 20px 0 20px;
+    color: #3a3a3a;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 10;
+    display: none;
+  }
+
+  .player-card.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: row;
+    width: auto;
+    max-width: 1600px;
+    padding: 10px;
+    z-index: 20;
+    background-color: #e0e0dc;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgba(0,0,0,0.5);
+    cursor: pointer;
+    z-index: 21;
+    display: none;
+    transition: color 0.2s ease;
+  }
+
+  .close-btn:hover {
+    color: rgba(0,0,0,0.8);
+  }
+
+  .player-card.expanded .close-btn {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">
+    <img src="logo.png" alt="The Junction Logo" class="logo" />
+  </a>
+
+  <div class="line red"></div>
+  <div class="line blue"></div>
+
+  <h1>The Junctioneers</h1>
+
+  <div class="line green"></div>
+  <div class="line yellow"></div>
+</header>
+
+<div class="player-grid">
+
+
+  <!-- AshleyIceBattle -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/AshleyIceBattle/Skin_AshleyIceBattle.png" alt="AshleyIceBattle Skin" class="skin-image">
+      <div class="player-name">AshleyIceBattle</div>
+    </div>
+    <div class="base-container">
+      <img src="players/AshleyIceBattle/Base_AshleyIceBattle.png" alt="AshleyIceBattle Base" class="base-image">
+      <div class="coords">Coordinates: X: -98, Y: 76, Z: 639</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- bubleye -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/bubleye/Skin_bubleye.png" alt="bubleye Skin" class="skin-image">
+      <div class="player-name">bubleye</div>
+    </div>
+    <div class="base-container">
+      <img src="players/bubleye/Base_bubleye.png" alt="bubleye Base" class="base-image">
+      <div class="coords">Coordinates: X: -1170, Y: 88, Z: 270</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- DoOwlsExist -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/DoOwlsExist/Skin_DoOwlsExist.png" alt="DoOwlsExist Skin" class="skin-image">
+      <div class="player-name">DoOwlsExist</div>
+    </div>
+    <div class="base-container">
+      <img src="players/DoOwlsExist/Base_DoOwlsExist.png" alt="DoOwlsExist Base" class="base-image">
+      <div class="coords">Coordinates: X: -45, Y: 74, Z: 700</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- Hilltest -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/Hilltest/Skin_Hilltest.png" alt="Hilltest Skin" class="skin-image">
+      <div class="player-name">Hilltest</div>
+    </div>
+    <div class="base-container">
+      <img src="players/Hilltest/Base_Hilltest.png" alt="Hilltest Base" class="base-image">
+      <div class="coords">Coordinates: X: ?, Y: ?, Z: ?</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- JzDInarius -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/JzDInarius/Skin_JzDInarius.png" alt="JzDInarius Skin" class="skin-image">
+      <div class="player-name">JzDInarius</div>
+    </div>
+    <div class="base-container">
+      <img src="players/JzDInarius/Base_JzDInarius.png" alt="JzDInarius Base" class="base-image">
+      <div class="coords">Coordinates: X: 50, Y: 70, Z: 370</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- Mantelmann -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/Mantelmann/Skin_Mantelmann.png" alt="Mantelmann Skin" class="skin-image">
+      <div class="player-name">Mantelmann</div>
+    </div>
+    <div class="base-container">
+      <img src="players/Mantelmann/Base_Mantelmann.png" alt="Mantelmann Base" class="base-image">
+      <div class="coords">Coordinates: X: -219, Y: 70, Z: 500</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- Omgtrees -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/Omgtrees/Skin_Omgtrees.png" alt="Omgtrees Skin" class="skin-image">
+      <div class="player-name">Omgtrees</div>
+    </div>
+    <div class="base-container">
+      <img src="players/Omgtrees/Base_Omgtrees.png" alt="Omgtrees Base" class="base-image">
+      <div class="coords">Coordinates: X: -125, Y: 64, Z: 566</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- Othh -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/Othh/Skin_Othh.png" alt="Othh Skin" class="skin-image">
+      <div class="player-name">Othh</div>
+    </div>
+    <div class="base-container">
+      <img src="players/Othh/Base_Othh.png" alt="Othh Base" class="base-image">
+      <div class="coords">Coordinates: X: -90, Y: 70, Z: 400</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- PurpleValkyrie -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/PurpleValkyrie/Skin_PurpleValkyrie.png" alt="PurpleValkyrie Skin" class="skin-image">
+      <div class="player-name">PurpleValkyrie</div>
+    </div>
+    <div class="base-container">
+      <img src="players/PurpleValkyrie/Base_PurpleValkyrie.png" alt="PurpleValkyrie Base" class="base-image">
+      <div class="coords">Coordinates: X: ?, Y: ?, Z: ?</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- Sana_ -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/Sana_/Skin_Sana_.png" alt="Sana_ Skin" class="skin-image">
+      <div class="player-name">Sana_</div>
+    </div>
+    <div class="base-container">
+      <img src="players/Sana_/Base_Sana_.png" alt="Sana_ Base" class="base-image">
+      <div class="coords">Coordinates: X: -122, Y: 70, Z: 550</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- SquidCookies -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/SquidCookies/Skin_SquidCookies.png" alt="SquidCookies Skin" class="skin-image">
+      <div class="player-name">SquidCookies</div>
+    </div>
+    <div class="base-container">
+      <img src="players/SquidCookies/Base_SquidCookies.png" alt="SquidCookies Base" class="base-image">
+      <div class="coords">Coordinates: X: -1124, Y: 70, Z: 138</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+  <!-- YMCA -->
+  <div class="player-card" onclick="expandCard(this)">
+    <div class="player-info">
+      <img src="players/YMCA/Skin_YMCA.png" alt="YMCA Skin" class="skin-image">
+      <div class="player-name">YMCA</div>
+    </div>
+    <div class="base-container">
+      <img src="players/YMCA/Base_YMCA.png" alt="YMCA Base" class="base-image">
+      <div class="coords">Coordinates: X: -122, Y: 64, Z: 430</div>
+    </div>
+    <div class="close-btn" onclick="collapseCard(event)">×</div>
+  </div>
+
+</div>
+
+<div class="overlay" id="overlay" onclick="collapseCard()"></div>
+
+<script>
+  let expandedCard = null;
+
+  function expandCard(card) {
+    if (expandedCard) collapseCard();
+    card.classList.add('expanded');
+    document.getElementById('overlay').style.display = 'block';
+    expandedCard = card;
+  }
+
+  function collapseCard(event) {
+    if (event) event.stopPropagation();
+    if (!expandedCard) return;
+    expandedCard.classList.remove('expanded');
+    document.getElementById('overlay').style.display = 'none';
+    expandedCard = null;
+  }
+</script>
+
+</body>
+</html>
